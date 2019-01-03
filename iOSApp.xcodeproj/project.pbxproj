@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		A324C34121DDDBE10047CDFD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A324C34021DDDBE10047CDFD /* AppDelegate.swift */; };
 		A324C34321DDDBE20047CDFD /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A324C34221DDDBE20047CDFD /* ViewController.swift */; };
-		A324C34621DDDBE20047CDFD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A324C34421DDDBE20047CDFD /* Main.storyboard */; };
 		A324C34821DDDBE20047CDFD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A324C34721DDDBE20047CDFD /* Assets.xcassets */; };
 		A324C34B21DDDBE20047CDFD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A324C34921DDDBE20047CDFD /* LaunchScreen.storyboard */; };
 		A324C35621DDDBE50047CDFD /* iOSAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A324C35521DDDBE50047CDFD /* iOSAppTests.swift */; };
@@ -29,7 +28,6 @@
 		A324C33D21DDDBE10047CDFD /* iOSApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iOSApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A324C34021DDDBE10047CDFD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A324C34221DDDBE20047CDFD /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		A324C34521DDDBE20047CDFD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		A324C34721DDDBE20047CDFD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A324C34A21DDDBE20047CDFD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A324C34C21DDDBE30047CDFD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -79,7 +77,6 @@
 			children = (
 				A324C34021DDDBE10047CDFD /* AppDelegate.swift */,
 				A324C34221DDDBE20047CDFD /* ViewController.swift */,
-				A324C34421DDDBE20047CDFD /* Main.storyboard */,
 				A324C34721DDDBE20047CDFD /* Assets.xcassets */,
 				A324C34921DDDBE20047CDFD /* LaunchScreen.storyboard */,
 				A324C34C21DDDBE30047CDFD /* Info.plist */,
@@ -181,7 +178,6 @@
 			files = (
 				A324C34B21DDDBE20047CDFD /* LaunchScreen.storyboard in Resources */,
 				A324C34821DDDBE20047CDFD /* Assets.xcassets in Resources */,
-				A324C34621DDDBE20047CDFD /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -223,14 +219,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		A324C34421DDDBE20047CDFD /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				A324C34521DDDBE20047CDFD /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		A324C34921DDDBE20047CDFD /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -346,6 +334,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.infosys.iOSApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -358,6 +347,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.infosys.iOSApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};
@@ -408,6 +398,7 @@
 				A324C35C21DDDBE50047CDFD /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		A324C35D21DDDBE50047CDFD /* Build configuration list for PBXNativeTarget "iOSAppTests" */ = {
 			isa = XCConfigurationList;
@@ -416,6 +407,7 @@
 				A324C35F21DDDBE50047CDFD /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
