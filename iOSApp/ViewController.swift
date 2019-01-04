@@ -5,6 +5,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 
     //variable declaration
     var detailTableView : UITableView!
+    var arrayTitle = ["Beavers","Beavers","Beavers","Beavers","Beavers"]
+    var arrayDescription = ["Beavers are second only to humans in their ability to manipulate and change their environment. They can measure up to 1.3 metres long. A group of beavers is called a colony", "It is a well known fact that polar bears are the main mode of transportation in Canada. They consume far less gas and have the added benefit of being difficult to steal.", "A chiefly Canadian interrogative utterance, usually expressing surprise or doubt or seeking confirmation.", "Warmer than you might think.", "Sadly it's true."]
+    var imageArray = ["icon.png", "icon.png", "icon.png", "icon.png", "icon.png"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -12,12 +15,12 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         //create table view
         createTableView()
         
-        //register cell
-        detailTableView.register(UITableViewCell.self, forCellReuseIdentifier:"detailCell")
-        
         //setting tableview delegate and datasource
         detailTableView.delegate = self
         detailTableView.dataSource = self
+        
+        //register cell
+        detailTableView.register(DetailTableViewCell.self, forCellReuseIdentifier:"detailCell")
         
         //setup navigation bar
         setUpNavigation()
@@ -47,14 +50,20 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 
     //table view methods
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        return arrayTitle.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "detailCell", for: indexPath)
-        cell.textLabel?.text = "Test"
+        
+        let cell = tableView.dequeueReusableCell(withIdentifier: "detailCell", for: indexPath) as! DetailTableViewCell        
+        cell.titleLabel.text = arrayTitle[indexPath.row]  // test string doesn't work, returns nil
+        cell.detailedLabel.text = arrayDescription[indexPath.row]
+        cell.imageViewHeader.image = UIImage (imageLiteralResourceName: imageArray[indexPath.row])
         return cell
     }
 
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 100
+    }
 }
 
