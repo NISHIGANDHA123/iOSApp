@@ -9,6 +9,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     var arrayDescription = ["Beavers are second only to humans in their ability to manipulate and change their environment. They can measure up to 1.3 metres long. A group of beavers is called a colony", "It is a well known fact that polar bears are the main mode of transportation in Canada. They consume far less gas and have the added benefit of being difficult to steal.", "A chiefly Canadian interrogative utterance, usually expressing surprise or doubt or seeking confirmation.", "Warmer than you might think.", "Sadly it's true."]
     var imageArray = ["icon.png", "icon.png", "icon.png", "icon.png", "icon.png"]
     
+    let dataApi = DataAPI()
+    let dataModel = DataModel!.self
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -24,8 +27,19 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         //setup navigation bar
         setUpNavigation()
+        
+        //call api on load
+        dataApi.getDetailData(url: DATA_URL) { (responseData) in
+            if let dataModel = responseData {
+                self.setData(dataModel: dataModel)
+            }
+        }
     }
   
+    func setData(dataModel : DataModel)  {
+        print("title \(dataModel.title)")
+    }
+    
     //table view creation
     func createTableView() {
         detailTableView = UITableView()
