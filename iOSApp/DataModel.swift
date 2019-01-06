@@ -9,9 +9,8 @@
 import Foundation
 
 struct DataModel  {
-    let title: String
-    let rows : [String]
-    let description: String
-    let imageHref: String
+    let rowTitle: String?
+    let rowDescription: String?
+    let rowImageHref: String?
     
 }

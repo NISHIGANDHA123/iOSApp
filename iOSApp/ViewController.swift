@@ -1,16 +1,13 @@
 
 import UIKit
+import AlamofireImage
 
 class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     //variable declaration
     var detailTableView : UITableView!
-    var arrayTitle = ["Beavers","Beavers","Beavers","Beavers","Beavers"]
-    var arrayDescription = ["Beavers are second only to humans in their ability to manipulate and change their environment. They can measure up to 1.3 metres long. A group of beavers is called a colony", "It is a well known fact that polar bears are the main mode of transportation in Canada. They consume far less gas and have the added benefit of being difficult to steal.", "A chiefly Canadian interrogative utterance, usually expressing surprise or doubt or seeking confirmation.", "Warmer than you might think.", "Sadly it's true."]
-    var imageArray = ["icon.png", "icon.png", "icon.png", "icon.png", "icon.png"]
-    
-    let dataApi = DataAPI()
-    let dataModel = DataModel!.self
+    var arrayRow: [DataModel]?
+    var header: String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,22 +25,21 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         //setup navigation bar
         setUpNavigation()
         
-        //call api on load
-        dataApi.getDetailData(url: DATA_URL) { (responseData) in
-            if let dataModel = responseData {
-                self.setData(dataModel: dataModel)
-            }
-        }
+        DataAPI.GetDetailData(url: constants.DATA_URL, completion: { rows,header in
+                    self.header = header
+                    self.setUpNavigation()
+                    self.arrayRow = rows
+                    self.detailTableView.reloadData()
+
+        })
     }
-  
-    func setData(dataModel : DataModel)  {
-        print("title \(dataModel.title)")
-    }
+
     
     //table view creation
     func createTableView() {
         detailTableView = UITableView()
         detailTableView.backgroundColor = .white
+
         self.view.addSubview(detailTableView)
         
         detailTableView.translatesAutoresizingMaskIntoConstraints = false
@@ -55,7 +51,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     //Navigation bar creation
     func setUpNavigation() {
-        navigationItem.title = "About Canada"
+        navigationItem.title = self.header
         self.navigationController?.navigationBar.barTintColor = UIColor.init(colorLiteralRed: 0.2431372549, green: 0.7647058824, blue: 0.8392156863, alpha: 1)
         self.navigationController?.navigationBar.isTranslucent = false
         UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName:UIColor.init(colorLiteralRed: 1, green: 1, blue: 1, alpha: 1)]
@@ -64,20 +60,43 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 
     //table view methods
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return arrayTitle.count
+        if let count = arrayRow?.count {
+            return count
+        } else {
+            return 0
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: "detailCell", for: indexPath) as! DetailTableViewCell        
-        cell.titleLabel.text = arrayTitle[indexPath.row]  // test string doesn't work, returns nil
-        cell.detailedLabel.text = arrayDescription[indexPath.row]
-        cell.imageViewHeader.image = UIImage (imageLiteralResourceName: imageArray[indexPath.row])
+        let cell = tableView.dequeueReusableCell(withIdentifier: "detailCell", for: indexPath) as! DetailTableViewCell
+        cell.titleLabel.text = arrayRow?[indexPath.row].rowTitle
+        cell.detailedLabel.text = arrayRow?[indexPath.row].rowDescription
+            let urlImageHref:URL?
+            if (arrayRow?[indexPath.row].rowImageHref != nil) {
+                urlImageHref = URL(string: (arrayRow?[indexPath.row].rowImageHref)!)
+                cell.imageViewHeader.af_setImage(withURL: urlImageHref!,
+                                                 placeholderImage: UIImage(named:"loader"),
+                                                 filter: nil,
+                                                 progress: nil,
+                                                 imageTransition: .crossDissolve(0.5),
+                                                 runImageTransitionIfCached: true,
+                                                 completion: nil)
+            }else {
+                cell.imageViewHeader.image = UIImage(named: "noimage")
+            }
         return cell
     }
-
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 100
     }
 }
+
+
+
+
+
+
+
 

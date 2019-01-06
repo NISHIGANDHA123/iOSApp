@@ -8,6 +8,7 @@ target 'iOSApp' do
   # Pods for iOSApp
     pod 'Alamofire'
     pod 'SwiftyJSON'
+    pod ‘AlamofireImage’
 
   target 'iOSAppTests' do
     inherit! :search_paths
