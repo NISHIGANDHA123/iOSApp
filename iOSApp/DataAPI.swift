@@ -2,7 +2,7 @@
 //  DataAPI.swift
 //  iOSApp
 //
-//  Created by Himanshu Lanjewar on 04/01/19.
+//  Created by Nishigandha Rajurkar on 04/01/19.
 //  Copyright © 2019 iOS APP. All rights reserved.
 //
 
@@ -11,12 +11,10 @@ import Alamofire
 import SwiftyJSON
   
 typealias DataResponseCompletion = ([DataModel],String) -> Void
-
 class DataAPI {
     
     static func GetDetailData(url: String, completion: @escaping DataResponseCompletion) {
         guard let url = URL(string: url) else { return }
-        
         Alamofire.request(url)
             .responseString { response in
                 
@@ -34,10 +32,8 @@ class DataAPI {
                                                   rowDescription: subJson["description"].string,
                                                   rowImageHref: subJson["imageHref"].string))
                         }
-
                         completion(rows, headerTitle)
                     }
- 
                 }
 
                 if let error = response.result.error {

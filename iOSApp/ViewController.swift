@@ -2,7 +2,7 @@
 import UIKit
 import AlamofireImage
 
-class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class ViewController: UIViewController {
 
     //variable declaration
     var detailTableView : UITableView!
@@ -20,26 +20,24 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         detailTableView.dataSource = self
         
         //register cell
-        detailTableView.register(DetailTableViewCell.self, forCellReuseIdentifier:"detailCell")
+        detailTableView.register(DetailTableViewCell.self, forCellReuseIdentifier:Constants.cellReuseIdentifier)
         
         //setup navigation bar
         setUpNavigation()
         
-        DataAPI.GetDetailData(url: constants.DATA_URL, completion: { rows,header in
+        //API CALL
+        DataAPI.GetDetailData(url: Constants.DATA_URL, completion: { rows,header in
                     self.header = header
                     self.setUpNavigation()
                     self.arrayRow = rows
                     self.detailTableView.reloadData()
-
         })
     }
-
     
     //table view creation
     func createTableView() {
         detailTableView = UITableView()
-        detailTableView.backgroundColor = .white
-
+        detailTableView.backgroundColor = Constants.BG_COLOR_TABLE
         self.view.addSubview(detailTableView)
         
         detailTableView.translatesAutoresizingMaskIntoConstraints = false
@@ -52,13 +50,20 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     //Navigation bar creation
     func setUpNavigation() {
         navigationItem.title = self.header
-        self.navigationController?.navigationBar.barTintColor = UIColor.init(colorLiteralRed: 0.2431372549, green: 0.7647058824, blue: 0.8392156863, alpha: 1)
+        self.navigationController?.navigationBar.barTintColor = Constants.BAR_TINT_COLOR
         self.navigationController?.navigationBar.isTranslucent = false
-        UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName:UIColor.init(colorLiteralRed: 1, green: 1, blue: 1, alpha: 1)]
-
+        UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName:Constants.TITLE_TEXT_ATTRIBUTE]
     }
+}
 
-    //table view methods
+extension ViewController : UITableViewDelegate {
+        func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+            return 150
+        }
+}
+
+extension ViewController : UITableViewDataSource {
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if let count = arrayRow?.count {
             return count
@@ -68,35 +73,31 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: Constants.cellReuseIdentifier, for: indexPath) as! DetailTableViewCell
+        if (arrayRow?[indexPath.row].rowTitle != nil) {
+            cell.titleLabel.text = arrayRow?[indexPath.row].rowTitle
+        } else {
+            cell.titleLabel.text = Constants.EPMTY_STRING
+        }
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: "detailCell", for: indexPath) as! DetailTableViewCell
-        cell.titleLabel.text = arrayRow?[indexPath.row].rowTitle
-        cell.detailedLabel.text = arrayRow?[indexPath.row].rowDescription
-            let urlImageHref:URL?
-            if (arrayRow?[indexPath.row].rowImageHref != nil) {
-                urlImageHref = URL(string: (arrayRow?[indexPath.row].rowImageHref)!)
-                cell.imageViewHeader.af_setImage(withURL: urlImageHref!,
-                                                 placeholderImage: UIImage(named:"loader"),
-                                                 filter: nil,
-                                                 progress: nil,
-                                                 imageTransition: .crossDissolve(0.5),
-                                                 runImageTransitionIfCached: true,
-                                                 completion: nil)
-            }else {
-                cell.imageViewHeader.image = UIImage(named: "noimage")
-            }
+        if (arrayRow?[indexPath.row].rowDescription != nil) {
+            cell.detailedLabel.text = arrayRow?[indexPath.row].rowDescription
+        } else {
+            cell.detailedLabel.text = Constants.EPMTY_STRING
+        }
+        let urlImageHref:URL?
+        if (arrayRow?[indexPath.row].rowImageHref != nil) {
+            urlImageHref = URL(string: (arrayRow?[indexPath.row].rowImageHref)!)
+            cell.imageViewHeader.af_setImage(withURL: urlImageHref!,
+                                             placeholderImage: UIImage(named:Constants.PLACEHOLDER_IMAGE),
+                                             filter: nil,
+                                             progress: nil,
+                                             imageTransition: .crossDissolve(0.5),
+                                             runImageTransitionIfCached: true,
+                                             completion: nil)
+        } else {
+            cell.imageViewHeader.image = UIImage(named: Constants.NO_IMAGE_AVAILABLE)
+        }
         return cell
     }
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 100
-    }
 }
-
-
-
-
-
-
-
-
