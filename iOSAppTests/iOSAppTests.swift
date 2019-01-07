@@ -7,13 +7,18 @@
 //
 
 import XCTest
+//import Foundation
+
 @testable import iOSApp
 
 class iOSAppTests: XCTestCase {
+    var app: XCUIApplication!
     
     override func setUp() {
         super.setUp()
         // Put setup code here. This method is called before the invocation of each test method in the class.
+        //continueAfterFailure = false
+        //app = XCUIApplication()
     }
     
     override func tearDown() {
@@ -32,5 +37,20 @@ class iOSAppTests: XCTestCase {
             // Put the code you want to measure the time of here.
         }
     }
+    
+//    func testTableInteraction() {
+//        app.launch()
+//        
+//        // Assert that we are displaying the tableview
+//        let detailTableView = app.tables["table--detailTableView"]
+//        
+//        XCTAssertTrue(detailTableView.exists, "The article tableview exists")
+//        
+//        // Get an array of cells
+//        //let tableCells = detailTableView.cells
+//        
+//    }
+
+
     
 }

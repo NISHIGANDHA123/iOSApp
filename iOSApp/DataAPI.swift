@@ -22,7 +22,6 @@ class DataAPI {
                     
                     if let dataFromString = response.result.value?.data(using: .utf8, allowLossyConversion: false) {
                         let json = JSON(data: dataFromString)
-                        
                         var rows = [DataModel]()
                         let headerTitle: String = json["title"].stringValue
                         let dataJson = json["rows"]
@@ -43,4 +42,5 @@ class DataAPI {
                 }
             }
     }
+    
 }

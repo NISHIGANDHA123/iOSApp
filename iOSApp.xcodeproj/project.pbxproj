@@ -17,6 +17,7 @@
 		A33EA72621DF4A5600824CB3 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = A33EA72321DF4A5600824CB3 /* Constants.swift */; };
 		A33EA72721DF4A5600824CB3 /* DataAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = A33EA72421DF4A5600824CB3 /* DataAPI.swift */; };
 		A33EA72821DF4A5600824CB3 /* DataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A33EA72521DF4A5600824CB3 /* DataModel.swift */; };
+		A353A34C21E359AC006AAE54 /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = A353A34B21E359AC006AAE54 /* Reachability.swift */; };
 		A36906EB21DE0CC500D8E1D8 /* DetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A36906EA21DE0CC500D8E1D8 /* DetailTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
@@ -48,6 +49,7 @@
 		A33EA72321DF4A5600824CB3 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		A33EA72421DF4A5600824CB3 /* DataAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataAPI.swift; sourceTree = "<group>"; };
 		A33EA72521DF4A5600824CB3 /* DataModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataModel.swift; sourceTree = "<group>"; };
+		A353A34B21E359AC006AAE54 /* Reachability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
 		A36906EA21DE0CC500D8E1D8 /* DetailTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailTableViewCell.swift; sourceTree = "<group>"; };
 		CBEF6182216DD8C4FD56CADA /* Pods_iOSApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_iOSApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -106,6 +108,7 @@
 		A324C33F21DDDBE10047CDFD /* iOSApp */ = {
 			isa = PBXGroup;
 			children = (
+				A36C0BF721E35598009AC99F /* Network */,
 				A33EA72B21DF7D0800824CB3 /* Model */,
 				A33EA72A21DF7CE300824CB3 /* Service */,
 				A33EA72921DF7CD200824CB3 /* Utils */,
@@ -166,6 +169,14 @@
 				A36906EA21DE0CC500D8E1D8 /* DetailTableViewCell.swift */,
 			);
 			name = Customcell;
+			sourceTree = "<group>";
+		};
+		A36C0BF721E35598009AC99F /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				A353A34B21E359AC006AAE54 /* Reachability.swift */,
+			);
+			name = Network;
 			sourceTree = "<group>";
 		};
 		A9F3FA729283460F1A4940B7 /* Frameworks */ = {
@@ -343,6 +354,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A353A34C21E359AC006AAE54 /* Reachability.swift in Sources */,
 				A36906EB21DE0CC500D8E1D8 /* DetailTableViewCell.swift in Sources */,
 				A33EA72721DF4A5600824CB3 /* DataAPI.swift in Sources */,
 				A324C34321DDDBE20047CDFD /* ViewController.swift in Sources */,

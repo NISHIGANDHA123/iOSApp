@@ -1,4 +1,10 @@
-
+//
+//  ViewController.swift
+//  iOSApp
+//
+//  Created by Nishigandha Rajurkar on 03/01/19.
+//  Copyright © 2019 iOS APP. All rights reserved.
+//
 import UIKit
 import AlamofireImage
 
@@ -25,17 +31,26 @@ class ViewController: UIViewController {
         //setup navigation bar
         setUpNavigation()
         
-        //API CALL
-        DataAPI.GetDetailData(url: Constants.DATA_URL, completion: { rows,header in
-                    self.header = header
-                    self.setUpNavigation()
-                    self.arrayRow = rows
-                    self.detailTableView.reloadData()
-        })
+        //Refresh control for table view
+        createRefreshControl()
+        
+        if ReachabilityTest.isConnectedToNetwork() {
+            //API CALL
+            DataAPI.GetDetailData(url: Constants.DATA_URL, completion: { rows,header in
+                self.header = header
+                self.setUpNavigation()
+                self.arrayRow = rows
+                self.detailTableView.reloadData()
+            })
+        } else {
+            let alert = UIAlertController(title: "No Internet Connection", message: "Make sure your device is connected to the internet.", preferredStyle: UIAlertControllerStyle.alert)
+            alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+        }
     }
     
     //table view creation
-    func createTableView() {
+    private func createTableView() {
         detailTableView = UITableView()
         detailTableView.backgroundColor = Constants.BG_COLOR_TABLE
         self.view.addSubview(detailTableView)
@@ -48,18 +63,32 @@ class ViewController: UIViewController {
     }
     
     //Navigation bar creation
-    func setUpNavigation() {
+    private func setUpNavigation() {
         navigationItem.title = self.header
         self.navigationController?.navigationBar.barTintColor = Constants.BAR_TINT_COLOR
         self.navigationController?.navigationBar.isTranslucent = false
         UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName:Constants.TITLE_TEXT_ATTRIBUTE]
     }
+    
+    private func createRefreshControl()  {
+        let refreshControl = UIRefreshControl()
+        refreshControl.attributedTitle = NSAttributedString(string: Constants.PULL_TO_REFRESH)
+        refreshControl.addTarget(self, action: #selector(refreshView), for: .valueChanged)
+        detailTableView.refreshControl = refreshControl
+
+    }
+    
+    func refreshView(refreshControl: UIRefreshControl) {
+        self.detailTableView.reloadData()
+        refreshControl.endRefreshing()
+    }
+    
 }
 
 extension ViewController : UITableViewDelegate {
-        func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-            return 150
-        }
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 150
+    }
 }
 
 extension ViewController : UITableViewDataSource {

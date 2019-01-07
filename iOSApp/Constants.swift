@@ -1,6 +1,10 @@
-
-
-
+//
+//  Constants.swift
+//  iOSApp
+//
+//  Created by Nishigandha Rajurkar on 03/01/19.
+//  Copyright © 2019 iOS APP. All rights reserved.
+//
 
 import UIKit
 class Constants {
@@ -16,8 +20,8 @@ class Constants {
     
     static let BG_COLOR_TABLE = UIColor.white
     
+    //UIColor.init should change in swift as it is deprecated
     static let BAR_TINT_COLOR = UIColor.init(colorLiteralRed: 0.2431372549, green: 0.7647058824, blue: 0.8392156863, alpha: 1)
-    
     static let TITLE_TEXT_ATTRIBUTE = UIColor.init(colorLiteralRed: 1, green: 1, blue: 1, alpha: 1)
     
     static let PLACEHOLDER_IMAGE = "loader"
@@ -25,5 +29,6 @@ class Constants {
     
     static let cellReuseIdentifier = "detailCell"
     static let EPMTY_STRING = ""
+    static let PULL_TO_REFRESH = "Pull down to refresh"
     
 }
