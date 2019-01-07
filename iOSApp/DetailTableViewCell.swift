@@ -14,8 +14,8 @@ class DetailTableViewCell: UITableViewCell {
     // MARK: LABEL and VIEW
     let imageViewHeader:UIImageView = {
         let img = UIImageView()
-        img.contentMode = .scaleAspectFill // image will never be strecthed vertially or horizontally
-        img.translatesAutoresizingMaskIntoConstraints = false // enable autolayout
+        img.contentMode = .scaleAspectFill
+        img.translatesAutoresizingMaskIntoConstraints = false
         img.layer.cornerRadius = CGFloat(Constants.CORNER_RADIUS)
         img.clipsToBounds = true
         return img
@@ -44,7 +44,7 @@ class DetailTableViewCell: UITableViewCell {
     let containerView:UIView = {
         let _containerView = UIView()
         _containerView.translatesAutoresizingMaskIntoConstraints = false
-        _containerView.clipsToBounds = true // this will make sure its children do not go out of the boundary
+        _containerView.clipsToBounds = true
         return _containerView
     }()
     
@@ -61,20 +61,20 @@ class DetailTableViewCell: UITableViewCell {
         imageViewHeader.widthAnchor.constraint(equalToConstant:70).isActive = true
         imageViewHeader.heightAnchor.constraint(equalToConstant:70).isActive = true
         
-        // configure titleLabel
+        // Configure titleLabel
         contentView.addSubview(titleLabel)
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         titleLabel.leadingAnchor.constraint(equalTo: imageViewHeader.trailingAnchor, constant:10).isActive = true
-        titleLabel.topAnchor.constraint(equalTo: marginGuide.topAnchor).isActive = true
+        titleLabel.topAnchor.constraint(equalTo: marginGuide.topAnchor, constant:20).isActive = true
         titleLabel.trailingAnchor.constraint(equalTo: marginGuide.trailingAnchor).isActive = true
 
-        // configure detailedLabel
+        // Configure detailedLabel
         contentView.addSubview(detailedLabel)
         detailedLabel.translatesAutoresizingMaskIntoConstraints = false
-        detailedLabel.leadingAnchor.constraint(equalTo: imageViewHeader.trailingAnchor, constant:10).isActive = true
+        detailedLabel.leadingAnchor.constraint(equalTo: marginGuide.leadingAnchor).isActive = true
         detailedLabel.bottomAnchor.constraint(equalTo: marginGuide.bottomAnchor).isActive = true
         detailedLabel.trailingAnchor.constraint(equalTo: marginGuide.trailingAnchor).isActive = true
-        detailedLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor).isActive = true
+        detailedLabel.topAnchor.constraint(equalTo: imageViewHeader.bottomAnchor, constant:10).isActive = true
         
     }
     

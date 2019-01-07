@@ -6,8 +6,7 @@
 //  Copyright © 2019 iOS APP. All rights reserved.
 //
 
-import Foundation
-
+// A structure to store the data. 
 struct DataModel  {
     let rowTitle: String?
     let rowDescription: String?

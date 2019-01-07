@@ -20,9 +20,8 @@ class Constants {
     
     static let BG_COLOR_TABLE = UIColor.white
     
-    //UIColor.init should change in swift as it is deprecated
-    static let BAR_TINT_COLOR = UIColor.init(colorLiteralRed: 0.2431372549, green: 0.7647058824, blue: 0.8392156863, alpha: 1)
-    static let TITLE_TEXT_ATTRIBUTE = UIColor.init(colorLiteralRed: 1, green: 1, blue: 1, alpha: 1)
+    static let BAR_TINT_COLOR = UIColor.brown
+    static let TITLE_TEXT_ATTRIBUTE = UIColor.black
     
     static let PLACEHOLDER_IMAGE = "loader"
     static let NO_IMAGE_AVAILABLE = "noimage"
@@ -31,4 +30,18 @@ class Constants {
     static let EPMTY_STRING = ""
     static let PULL_TO_REFRESH = "Pull down to refresh"
     
+    static let TABLE_HEIGHT = 150
+    static let NO_INTERNET_TITLE = "No Internet Connection"
+    static let NO_INTERNET_MESSAGE = "Make sure your device is connected to the internet."
+    static let ALERT_ACTION = "OK"
+    
+    static let API_ERROR_TITLE = "Error!"
+    static let API_ERROR_MESSAGE = "Data not available"
+    
+    static let JSON_KEY_TITLE_MAIN = "title"
+    static let JSON_KEY_ROW = "rows"
+    static let JSON_KEY_TITLE = "title"
+    static let JSON_KEY_DESCRIPTION = "description"
+    static let JSON_KEY_IMAGE = "imageHref"
 }
+                                                 

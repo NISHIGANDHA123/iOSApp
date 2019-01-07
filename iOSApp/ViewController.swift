@@ -5,51 +5,38 @@
 //  Created by Nishigandha Rajurkar on 03/01/19.
 //  Copyright © 2019 iOS APP. All rights reserved.
 //
+
 import UIKit
 import AlamofireImage
 
+// Class used to show the list of rows data.
 class ViewController: UIViewController {
 
-    //variable declaration
+    // Variable declaration
     var detailTableView : UITableView!
     var arrayRow: [DataModel]?
     var header: String?
     
+    // Mark :- Controller cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //create table view
         createTableView()
         
-        //setting tableview delegate and datasource
         detailTableView.delegate = self
         detailTableView.dataSource = self
         
-        //register cell
+        detailTableView.rowHeight = UITableViewAutomaticDimension
+        detailTableView.estimatedRowHeight = CGFloat(Constants.TABLE_HEIGHT)
+        
         detailTableView.register(DetailTableViewCell.self, forCellReuseIdentifier:Constants.cellReuseIdentifier)
         
-        //setup navigation bar
-        setUpNavigation()
-        
-        //Refresh control for table view
         createRefreshControl()
         
-        if ReachabilityTest.isConnectedToNetwork() {
-            //API CALL
-            DataAPI.GetDetailData(url: Constants.DATA_URL, completion: { rows,header in
-                self.header = header
-                self.setUpNavigation()
-                self.arrayRow = rows
-                self.detailTableView.reloadData()
-            })
-        } else {
-            let alert = UIAlertController(title: "No Internet Connection", message: "Make sure your device is connected to the internet.", preferredStyle: UIAlertControllerStyle.alert)
-            alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
-            self.present(alert, animated: true, completion: nil)
-        }
+        APICallForGetData()
     }
     
-    //table view creation
+    // Table view creation
     private func createTableView() {
         detailTableView = UITableView()
         detailTableView.backgroundColor = Constants.BG_COLOR_TABLE
@@ -62,7 +49,7 @@ class ViewController: UIViewController {
         detailTableView.rightAnchor.constraint(equalTo: self.view.rightAnchor).isActive = true;
     }
     
-    //Navigation bar creation
+    // Navigation bar creation.
     private func setUpNavigation() {
         navigationItem.title = self.header
         self.navigationController?.navigationBar.barTintColor = Constants.BAR_TINT_COLOR
@@ -70,27 +57,64 @@ class ViewController: UIViewController {
         UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName:Constants.TITLE_TEXT_ATTRIBUTE]
     }
     
+    // Refresh control creation.
     private func createRefreshControl()  {
         let refreshControl = UIRefreshControl()
         refreshControl.attributedTitle = NSAttributedString(string: Constants.PULL_TO_REFRESH)
         refreshControl.addTarget(self, action: #selector(refreshView), for: .valueChanged)
         detailTableView.refreshControl = refreshControl
-
     }
     
+    // Refresh control functionality.
     func refreshView(refreshControl: UIRefreshControl) {
-        self.detailTableView.reloadData()
+        APICallForGetData()
         refreshControl.endRefreshing()
     }
     
-}
-
-extension ViewController : UITableViewDelegate {
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 150
+    private func APICallForGetData()  {
+        
+        //if network is rechable
+        if Reachability.isConnectedToInternet() {
+            DataAPI.GetDetailData(url: Constants.DATA_URL, success: { rows,header in
+                // if API returns success
+                self.header = header
+                self.setUpNavigation()
+                self.arrayRow = rows
+                self.detailTableView.reloadData()
+            }, failure: { fail in
+                // API returns failure
+                self.showAlert(title: Constants.API_ERROR_TITLE,
+                               message: Constants.API_ERROR_MESSAGE,
+                               action: Constants.ALERT_ACTION)
+            })
+        } else {
+            
+            //if network not rechable
+            self.showAlert(title: Constants.NO_INTERNET_TITLE,
+                           message: Constants.NO_INTERNET_MESSAGE,
+                           action: Constants.ALERT_ACTION)
+        }
+    }
+    
+    private func showAlert(title: String, message: String, action: String) {
+        let alert = UIAlertController(title: title,
+                                      message: message,
+                                      preferredStyle: UIAlertControllerStyle.alert)
+        alert.addAction(UIAlertAction(title: action,
+                                      style: UIAlertActionStyle.default,
+                                      handler: nil))
+        self.present(alert, animated: true, completion: nil)
     }
 }
 
+// Mark :- UITableViewDelegate
+extension ViewController : UITableViewDelegate {
+//    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+//        return CGFloat(Constants.TABLE_HEIGHT)
+//    }
+}
+
+// Mark :- UITableViewDataSource
 extension ViewController : UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -127,6 +151,8 @@ extension ViewController : UITableViewDataSource {
         } else {
             cell.imageViewHeader.image = UIImage(named: Constants.NO_IMAGE_AVAILABLE)
         }
+        cell.setNeedsLayout()
+        cell.layoutIfNeeded()
         return cell
     }
 }

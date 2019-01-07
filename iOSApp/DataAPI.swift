@@ -1,4 +1,4 @@
-  //
+//
 //  DataAPI.swift
 //  iOSApp
 //
@@ -6,38 +6,50 @@
 //  Copyright © 2019 iOS APP. All rights reserved.
 //
 
-import Foundation
 import Alamofire
 import SwiftyJSON
   
-typealias DataResponseCompletion = ([DataModel],String) -> Void
+typealias DataResponseSuccessCompletion = ([DataModel],String) -> Void
+typealias DataResponseFailureCompletion = (Error) -> Void
+
+// A Class to get the row data from the server
 class DataAPI {
     
-    static func GetDetailData(url: String, completion: @escaping DataResponseCompletion) {
+    /**
+     Get the row data from server.
+     
+     parameter 
+        - url: A server url
+        - success: Success completion block
+        - failure: failure completioon block
+    **/
+    static func GetDetailData(url: String,
+                              success: @escaping DataResponseSuccessCompletion,
+                              failure: @escaping DataResponseFailureCompletion) {
+        
         guard let url = URL(string: url) else { return }
         Alamofire.request(url)
             .responseString { response in
-                
                 if((response.result.value) != nil) {
                     
                     if let dataFromString = response.result.value?.data(using: .utf8, allowLossyConversion: false) {
                         let json = JSON(data: dataFromString)
                         var rows = [DataModel]()
-                        let headerTitle: String = json["title"].stringValue
-                        let dataJson = json["rows"]
+                        let headerTitle: String = json[Constants.JSON_KEY_TITLE_MAIN].stringValue
+                        let dataJson = json[Constants.JSON_KEY_ROW]
                         
                         for subJson in dataJson.arrayValue {
-                            rows.append(DataModel(rowTitle: subJson["title"].string,
-                                                  rowDescription: subJson["description"].string,
-                                                  rowImageHref: subJson["imageHref"].string))
+                            rows.append(DataModel(rowTitle: subJson[Constants.JSON_KEY_TITLE].string,
+                                                  rowDescription: subJson[Constants.JSON_KEY_DESCRIPTION].string,
+                                                  rowImageHref: subJson[Constants.JSON_KEY_IMAGE].string))
                         }
-                        completion(rows, headerTitle)
+                        success(rows, headerTitle)
                     }
                 }
 
                 if let error = response.result.error {
                     debugPrint(error.localizedDescription)
-                    completion([], "")
+                    failure(error)
                     return
                 }
             }
