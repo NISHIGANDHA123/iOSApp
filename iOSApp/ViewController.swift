@@ -109,9 +109,9 @@ class ViewController: UIViewController {
 
 // Mark :- UITableViewDelegate
 extension ViewController : UITableViewDelegate {
-//    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-//        return CGFloat(Constants.TABLE_HEIGHT)
-//    }
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return UITableViewAutomaticDimension
+    }
 }
 
 // Mark :- UITableViewDataSource
