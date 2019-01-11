@@ -12,23 +12,17 @@ import XCTest
 @testable import iOSApp
 
 class iOSAppTests: XCTestCase {
-    var app: XCUIApplication!
+    var controller: ViewController!
     
     override func setUp() {
         super.setUp()
-        // Put setup code here. This method is called before the invocation of each test method in the class.
-        //continueAfterFailure = false
-        //app = XCUIApplication()
+        controller = ViewController()
+        print(controller.view.description)
     }
     
     override func tearDown() {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
         super.tearDown()
-    }
-    
-    func testExample() {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
     }
     
     func testPerformanceExample() {
@@ -38,19 +32,28 @@ class iOSAppTests: XCTestCase {
         }
     }
     
-//    func testTableInteraction() {
-//        app.launch()
-//        
-//        // Assert that we are displaying the tableview
-//        let detailTableView = app.tables["table--detailTableView"]
-//        
-//        XCTAssertTrue(detailTableView.exists, "The article tableview exists")
-//        
-//        // Get an array of cells
-//        //let tableCells = detailTableView.cells
-//        
-//    }
-
-
+    func testTableView()  {
+        XCTAssertNotNil(controller.detailTableView)
+    }
+    
+    func testTableViewDataSource() {
+        XCTAssertTrue((controller.detailTableView.dataSource  != nil))
+    }
+    
+    func testTableViewDelegate() {
+        XCTAssertTrue((controller.detailTableView.delegate  != nil))
+    }
+    
+    func testTableViewCellForRowAtIndexPath() {
+        let indexPath = NSIndexPath.init(row: 0, section: 0)
+        let cell = controller.tableView(controller.detailTableView, cellForRowAt: indexPath as IndexPath) as! DetailTableViewCell
+        XCTAssertNotNil(cell.titleLabel.text)
+        XCTAssertNotNil(cell.detailedLabel.text)
+        XCTAssertNotNil(cell.imageViewHeader.image)
+    }
+    
+    func testRefreshControlExist()  {
+        XCTAssertNotNil(controller.detailTableView.refreshControl)
+    }        
     
 }
